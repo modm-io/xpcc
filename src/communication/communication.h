@@ -29,8 +29,18 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef	COMMUNICATION_H
-#define	COMMUNICATION_H
+#ifndef	CPCC_COMMUNICATION_H
+#define	CPCC_COMMUNICATION_H
+
+/**
+ * @defgroup 	communication Communication
+ * @brief 		Interface to the Linux-TIPC.
+ *
+ * DESC DESC
+ *
+ * @version		$Id$
+ * @author		Martin Rosekeit, Fabian Greif
+ */
 
 #include "xpcc/backend_interface.h"
 
@@ -74,4 +84,4 @@ namespace xpcc
 	};
 }
 
-#endif // COMMUNICATION_H
+#endif // CPCC_COMMUNICATION_H
