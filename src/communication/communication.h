@@ -42,7 +42,7 @@
  * @author		Martin Rosekeit, Fabian Greif
  */
 
-#include "xpcc/backend_interface.h"
+#include "backend/backend_interface.h"
 
 namespace xpcc
 {
