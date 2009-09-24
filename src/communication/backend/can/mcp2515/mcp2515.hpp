@@ -29,17 +29,17 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef	XPCC_BACKEND_MCP2515_H
-#define	XPCC_BACKEND_MCP2515_H
+#ifndef	XPCC_BACKEND_CAN_MCP2515_HPP
+#define	XPCC_BACKEND_CAN_MCP2515_HPP
 
-#include "../backend_interface.h"
+#include "../can.hpp"
 
 namespace xpcc
 {
-	class Mcp2515 : public BackendInterface
+	class Mcp2515 : public CanInterface
 	{
 	public:
-		struct FilterTable
+		/*struct FilterTable
 		{
 			struct {
 				uint32_t filter[2];
@@ -50,25 +50,14 @@ namespace xpcc
 				uint32_t filter[4];
 				uint32_t mask;
 			} bank2;
-		};
-		
+		};*/
+	
 	public:
-		Mcp2515(FilterTable& filter);
-		
-		
-		virtual bool
-		sendPacket(Packet &packet);
-		
-		
-		virtual bool
-		isPacketAvailable() const;
+		//Mcp2515(FilterTable& filter);
 		
 		virtual void
-		retrievePacket();
-		
-		virtual const Packet&
-		getPacket() const;
+		update();
 	};
 }
 
-#endif // XPCC_BACKEND_MCP2515_H
+#endif // XPCC_BACKEND_CAN_MCP2515_HPP
