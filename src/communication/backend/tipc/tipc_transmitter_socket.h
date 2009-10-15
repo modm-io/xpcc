@@ -28,11 +28,11 @@
  * $Id$
  */
 // ----------------------------------------------------------------------------
-#ifndef TIPC_TRANSMITTER_SOCKET_H_
-#define TIPC_TRANSMITTER_SOCKET_H_
+#ifndef XPCC__TIPC_TRANSMITTER_SOCKET_H_
+#define XPCC__TIPC_TRANSMITTER_SOCKET_H_
  
 
-namespace rca {
+namespace xpcc {
 	namespace tipc {
 		/**
 		 * @class		TransmitterSocket
