@@ -40,6 +40,9 @@ namespace xpcc
 	class SmartPayload
 	{
 	public:
+		// default constructor with empty payload
+		SmartPayload();
+
 		// Must use a pointer to T here, otherwise the compiler can't distinguish
 		// between constructor and copy constructor!
 		template<typename T>
@@ -50,25 +53,15 @@ namespace xpcc
 			ptr[1] = sizeof(T);
 			memcpy(ptr + 2, data, sizeof(T));
 		}
+
+		SmartPayload(const SmartPayload& other);
 		
-		SmartPayload(const SmartPayload& other) 
-		: ptr(other.ptr)
-		{
-			ptr[0]++;
-		}
-		
-		~SmartPayload() {
-			if (--ptr[0] == 0) {
-				delete ptr;
-			}
-		}
+		~SmartPayload();
 		
 		const uint8_t *
-		getPointer() const {
-			return &ptr[2];
-		}
+		getPointer() const;
 		
-		uint8_t
+		inline uint8_t
 		getSize() const {
 			return ptr[1];
 		}
