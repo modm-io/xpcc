@@ -32,7 +32,8 @@
 #include "tipc.hpp"
 
 xpcc::tipc::Tipc::Tipc( ) :
-	receiver( )
+	receiver( ),
+	transmitter( )
 {
 
 }
@@ -40,27 +41,6 @@ xpcc::tipc::Tipc::Tipc( ) :
 // ----------------------------------------------------------------------------
 
 xpcc::tipc::Tipc::~Tipc()
-{
-
-}
-
-// ----------------------------------------------------------------------------
-
-void
-xpcc::tipc::Tipc::addFilter(
-		xpcc::Header::Type type,
-		bool isAcknowledge,
-		uint8_t destination,
-		uint8_t source,
-		uint8_t actionIdentifier)
-{
-
-}
-
-// ----------------------------------------------------------------------------
-
-void
-xpcc::tipc::Tipc::sendPacket(const xpcc::Header &header, const SmartPayload& payload)
 {
 
 }
@@ -78,7 +58,7 @@ xpcc::tipc::Tipc::isPacketAvailable() const
 const xpcc::Header&
 xpcc::tipc::Tipc::getPacketHeader() const
 {
-
+	return this->receiver.frontHeader();
 }
 
 // ----------------------------------------------------------------------------
@@ -86,7 +66,7 @@ xpcc::tipc::Tipc::getPacketHeader() const
 const uint8_t *
 xpcc::tipc::Tipc::getPacketPayload() const
 {
-
+	return this->receiver.frontPayload();
 }
 
 // ----------------------------------------------------------------------------
@@ -94,7 +74,7 @@ xpcc::tipc::Tipc::getPacketPayload() const
 uint8_t
 xpcc::tipc::Tipc::getPacketPayloadSize() const
 {
-
+	return this->receiver.frontPayloadSize();
 }
 
 // ----------------------------------------------------------------------------
@@ -102,5 +82,23 @@ xpcc::tipc::Tipc::getPacketPayloadSize() const
 void
 xpcc::tipc::Tipc::dropPacket()
 {
-
+	this->receiver.popFront();
 }
+
+// ----------------------------------------------------------------------------
+
+void
+xpcc::tipc::Tipc::sendPacket(const xpcc::Header &header, const SmartPayload& payload)
+{
+	this->transmitter.transmitPacket(header, payload);
+}
+
+// ----------------------------------------------------------------------------
+
+void
+xpcc::tipc::Tipc::update()
+{
+	// nothing to do, becaus TipcReceiver is using threads
+}
+
+// ----------------------------------------------------------------------------
