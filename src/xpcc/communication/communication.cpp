@@ -32,34 +32,14 @@
 #include "communication.hpp"
 
 xpcc::Communication::Communication(BackendInterface *backend,
-				Postman* postman):backend(backend),postman(postman)
+				Postman* postman):backend(backend),postman(postman),responseManager()
 {
+
 }
 
 // ----------------------------------------------------------------------------
 xpcc::Communication::~Communication()
 {
-}
-
-// ----------------------------------------------------------------------------
-uint8_t
-xpcc::Communication::getCurrentComponent() const
-{
-	return currentComponent;
-}
-		
-// ----------------------------------------------------------------------------
-void
-xpcc::Communication::setCurrentComponent(uint8_t id)
-{
-	currentComponent = id;
-}
-		
-void
-xpcc::Communication::waitForAcknowledge(const Header& /*header*/, const SmartPayload& /*payload*/)
-{
-	// add header and payload to a list of wating acknowledges
-
 }
 
 // ----------------------------------------------------------------------------
@@ -83,4 +63,18 @@ xpcc::Communication::update(){
 	
 
 }
+
+// ----------------------------------------------------------------------------
+uint8_t
+xpcc::Communication::getCurrentComponent() const
+{
+	return currentComponent;
+}
 		
+// ----------------------------------------------------------------------------
+void
+xpcc::Communication::setCurrentComponent(uint8_t id)
+{
+	currentComponent = id;
+}
+
