@@ -67,8 +67,18 @@ xpcc::Communication::update(){
 		const Header& header( this->backend->getPacketHeader() );
 		
 		if ( header.type == Header::REQUEST && !header.isAcknowledge ){
-			postman->deliverPacket( *backend );
-			// check here the deliver state and generate ack, but do it during response too, so synchronize acknowleging!
+			if ( postman->deliverPacket( *backend ) == Postman::OK ) {
+				if ( header.destination != 0 ) {
+					// transmit ACK (is not an EVENT)
+					Header ackHeader(
+							header.type,
+							true,
+							header.source,
+							header.destination,
+							header.packetIdentifier);
+					this->backend->sendPacket( ackHeader );
+				}
+			}
 		}
 		else{
 			responseManager.handlePacket( *backend );

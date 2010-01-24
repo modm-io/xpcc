@@ -58,14 +58,16 @@ xpcc::ResponseCallback::ResponseCallback(AbstractComponent *object, CallbackFunc
 }
 		
 void
-xpcc::ResponseCallback::handleResponse(const ResponseMessage& message){
+xpcc::ResponseCallback::handleResponse(const ResponseMessage& message) const
+{
 	if( this->object != 0 ) {
 		(this->object->*callbackFunction)(message);
 	}
 }
 
 void
-xpcc::ResponseCallback::handleResponse(const BackendInterface &backend){
+xpcc::ResponseCallback::handleResponse(const BackendInterface &backend) const
+{
 	if( this->object != 0 ) {
 		ResponseMessage message( backend.getPacketHeader(), backend.getPacketPayload() );
 		(this->object->*callbackFunction)(message);
