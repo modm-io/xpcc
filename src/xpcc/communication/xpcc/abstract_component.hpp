@@ -37,10 +37,12 @@ namespace xpcc
 	class AbstractComponent
 	{
 	public:
+		void
+		update();
 		
-		
+		void
+		work();
 	};
-
 }
 
 #endif // XPCC_ABSTRACT_COMPONENT_H
