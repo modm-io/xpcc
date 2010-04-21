@@ -32,16 +32,30 @@
 #ifndef	XPCC__ABSTRACT_COMPONENT_HPP
 #define	XPCC__ABSTRACT_COMPONENT_HPP
 
+#include <stdint.h>
+
+#include "communication.hpp"
+
 namespace xpcc
 {
+	// forward declaration
+	class Communication;
+	
 	class AbstractComponent
 	{
 	public:
+		AbstractComponent(const uint8_t ownIdentifier, Communication *communication);
+		
+		/// Sets the current component and calls work()
 		void
 		update();
 		
-		void
-		work();
+	protected:
+		virtual void
+		work() = 0;
+		
+		uint8_t componentIdentifier;
+		Communication *communication;
 	};
 }
 
