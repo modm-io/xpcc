@@ -35,19 +35,22 @@
 
 #include <stdint.h>
 #include "communication.hpp"
+#include "communicatable.hpp"
 
 namespace xpcc
 {
 	// forward declaration
 	class Communication;
+	class CommunicatableTask;
 	
 	/**
 	 * \brief	Abstract base class for a component
 	 * 
 	 * \ingroup	communication
 	 */
-	class AbstractComponent
+	class AbstractComponent : public Communicatable
 	{
+		friend class CommunicatableTask;
 	public:
 		/**
 		 * \brief	Constructor
@@ -77,7 +80,13 @@ namespace xpcc
 		virtual void
 		work() = 0;
 		
-		uint8_t componentIdentifier;		///< own identifier
+		inline void
+		setCurrentComponent()
+		{
+			this->communication->setCurrentComponent(this->componentIdentifier);
+		}
+		
+		const uint8_t componentIdentifier;		///< own identifier
 		Communication *communication;
 	};
 }
