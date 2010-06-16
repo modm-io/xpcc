@@ -34,13 +34,45 @@
 xpcc::AbstractComponent::AbstractComponent(
 		const uint8_t ownIdentifier,
 		Communication *communication) : 
-	componentIdentifier(ownIdentifier), communication(communication)
+	ownIdentifier(ownIdentifier), communication(communication)
 {
 }
 
+// ----------------------------------------------------------------------------
 void
-xpcc::AbstractComponent::update()
+xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier)
 {
-	this->communication->setCurrentComponent(this->componentIdentifier);
-	this->work();
+	Header header(Header::REQUEST,
+			false,
+			receiver,
+			this->ownIdentifier,
+			actionIdentifier);
+
+	this->communication->responseManager.addActionCall(header);
+}
+
+void
+xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier, Callback& responseCallback)
+{
+	Header header(Header::REQUEST,
+			false,
+			receiver,
+			this->ownIdentifier,
+			actionIdentifier);
+
+	this->communication->responseManager.addActionCall(header, responseCallback);
+}
+
+
+// ----------------------------------------------------------------------------
+void
+xpcc::AbstractComponent::publishEvent(uint8_t eventIdentifier)
+{
+	Header header(Header::REQUEST,
+			false,
+			0,
+			this->ownIdentifier,
+			eventIdentifier);
+
+	this->communication->responseManager.addEvent(header);
 }
