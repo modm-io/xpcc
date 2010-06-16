@@ -33,22 +33,13 @@
 #ifndef	XPCC__CALLBACK_HPP
 #define	XPCC__CALLBACK_HPP
 
-#include <xpcc/data_structure/smart_pointer.hpp>
+#include <xpcc/container/smart_pointer.hpp>
+
 #include "backend/backend_interface.hpp"
 #include "communicatable.hpp"
 
 namespace xpcc
 {
-	// forward declaration
-	class AbstractComponent;
-	namespace communicationList
-	{
-		class Entry;
-		class List;
-	}
-	class Postman;
-	class StlPostman;
-	
 	/**
 	 * \brief 		Callback type, which has to be passed to communication during
 	 *				actioncall in order to be able to receive a response.
@@ -59,11 +50,6 @@ namespace xpcc
 	 */
 	class Callback
 	{
-		friend class communicationList::Entry;
-		friend class communicationList::List;
-		friend class Postman;
-		friend class StlPostman;
-		
 	public:
 		typedef void (Communicatable::*Function)(const Header& header, const uint8_t *type);
 		
@@ -103,7 +89,6 @@ namespace xpcc
 			this->packetSize = 0;
 		}
 		
-	protected:
 		/// \todo check packet size?
 		inline void
 		call(const Header& header, const SmartPointer &payload) const
@@ -115,6 +100,7 @@ namespace xpcc
 			// auch ohne ist aber extrem unschön!
 		}
 		
+	protected:
 		Communicatable *component;
 		Function function;
 		uint8_t packetSize;

@@ -36,7 +36,7 @@
 #include <xpcc/driver/tipc/header.hpp>
 #include <xpcc/driver/tipc/tipc_receiver.hpp>
 #include <xpcc/driver/tipc/tipc_transmitter.hpp>
-#include <xpcc/data_structure/smart_pointer.hpp>
+#include <xpcc/container/smart_pointer.hpp>
 
 #include "../backend_interface.hpp"
 

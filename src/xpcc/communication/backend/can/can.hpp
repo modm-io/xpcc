@@ -34,7 +34,7 @@
 
 #include "../backend_interface.hpp"
 
-#include <xpcc/data_structure/list.hpp>
+#include <xpcc/container/list.hpp>
 
 namespace xpcc
 {

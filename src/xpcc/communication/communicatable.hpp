@@ -36,7 +36,7 @@
 namespace xpcc
 {
 	/**
-	 * \brief	Interface 
+	 * \brief	Interface
 	 * 
 	 * \ingroup	communication
 	 */
