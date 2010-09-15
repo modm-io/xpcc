@@ -53,15 +53,30 @@ class CanConnectorTest : public unittest::TestSuite
 	createMessage(xpcc::can::Message& message,
 			uint8_t fragmentId) const;
 public:
-    virtual void setUp();
-    virtual void tearDown();
+    virtual void
+    setUp();
+    
+    virtual void
+    tearDown();
+    
 public:
     CanConnectorTest();
-    void testSendShortMessageDirect();
-    void testSendShortMessage();
-    void testSendFragmentedMessage();
-    void testReceiveShortMessage();
-    void testReceiveFragmentedMessage();
+    
+    void
+    testSendShortMessageDirect();
+    
+    void
+    testSendShortMessage();
+    
+    void
+    testSendFragmentedMessage();
+    
+    void
+    testReceiveShortMessage();
+    
+    void
+    testReceiveFragmentedMessage();
+    
 private:
 	TestingCanConnector *connector;
 	FakeCanDriver *driver;
