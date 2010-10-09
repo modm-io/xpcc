@@ -36,7 +36,9 @@
 namespace xpcc
 {
 	/**
-	 * \brief	Interface
+	 * \brief	Base class for all classed which need to communicate
+	 * 
+	 * Needed to have a common base class for the callback classes.
 	 * 
 	 * \ingroup	communication
 	 */

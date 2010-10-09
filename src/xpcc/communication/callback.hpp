@@ -54,7 +54,11 @@ namespace xpcc
 		typedef void (Communicatable::*Function)(const Header& header, const uint8_t *type);
 		
 	public:
-		Callback();
+		Callback() :
+			component(0),
+			packetSize(0)
+		{
+		};
 		
 		/**
 		 * Set the method that will be called when a response is received.

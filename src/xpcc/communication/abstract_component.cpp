@@ -5,6 +5,7 @@
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
+ * 
  *     * Redistributions of source code must retain the above copyright
  *       notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above copyright
@@ -47,7 +48,7 @@ xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier)
 			receiver,
 			this->ownIdentifier,
 			actionIdentifier);
-
+	
 	this->communication->responseManager.addActionCall(header);
 }
 
@@ -59,7 +60,7 @@ xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier, 
 			receiver,
 			this->ownIdentifier,
 			actionIdentifier);
-
+	
 	this->communication->responseManager.addActionCall(header, responseCallback);
 }
 
@@ -73,6 +74,32 @@ xpcc::AbstractComponent::publishEvent(uint8_t eventIdentifier)
 			0,
 			this->ownIdentifier,
 			eventIdentifier);
-
+	
 	this->communication->responseManager.addEvent(header);
+}
+
+
+// ----------------------------------------------------------------------------
+void
+xpcc::AbstractComponent::sendResponse(const ResponseHandle& handle)
+{
+	Header header(	Header::RESPONSE,
+					false,
+					handle.source,
+					handle.destination,
+					handle.packetIdentifier);
+
+	this->communication->responseManager.addResponse(header);
+}
+
+void
+xpcc::AbstractComponent::sendNegativeResponse(const ResponseHandle& handle)
+{
+	Header header(	Header::NEGATIVE_RESPONSE,
+					false,
+					handle.source,
+					handle.destination,
+					handle.packetIdentifier);
+
+	this->communication->responseManager.addResponse(header);
 }
