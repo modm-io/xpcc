@@ -34,7 +34,7 @@ import os
 import builder_base
 import filter.java as filter
 
-class JavaBuilder(builder_base.Builder):
+class JavaIdentifierBuilder(builder_base.Builder):
 	
 	VERSION = "$Id$"
 	
@@ -69,4 +69,4 @@ class JavaBuilder(builder_base.Builder):
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-	JavaBuilder().run()
+	JavaIdentifierBuilder().run()
