@@ -35,76 +35,7 @@
 xpcc::AbstractComponent::AbstractComponent(
 		const uint8_t ownIdentifier,
 		Dispatcher *communication) : 
-	ownIdentifier(ownIdentifier), communication(communication)
+	communicator(ownIdentifier, communication)
 {
 }
 
-// ----------------------------------------------------------------------------
-void
-xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier)
-{
-	Header header(Header::REQUEST,
-			false,
-			receiver,
-			this->ownIdentifier,
-			actionIdentifier);
-	
-	SmartPointer payload;
-	this->communication->addMessage(header, payload);
-}
-
-void
-xpcc::AbstractComponent::callAction(uint8_t receiver, uint8_t actionIdentifier, ResponseCallback& responseCallback)
-{
-	Header header(Header::REQUEST,
-			false,
-			receiver,
-			this->ownIdentifier,
-			actionIdentifier);
-	
-	SmartPointer payload;
-	this->communication->addMessage(header, payload, responseCallback);
-}
-
-
-// ----------------------------------------------------------------------------
-void
-xpcc::AbstractComponent::publishEvent(uint8_t eventIdentifier)
-{
-	Header header(Header::REQUEST,
-			false,
-			0,
-			this->ownIdentifier,
-			eventIdentifier);
-	
-	SmartPointer payload;
-	this->communication->addMessage(header, payload);
-}
-
-
-// ----------------------------------------------------------------------------
-void
-xpcc::AbstractComponent::sendResponse(const ResponseHandle& handle)
-{
-	Header header(	Header::RESPONSE,
-					false,
-					handle.source,
-					handle.destination,
-					handle.packetIdentifier);
-	
-	SmartPointer payload;
-	this->communication->addResponse(header, payload);
-}
-
-void
-xpcc::AbstractComponent::sendNegativeResponse(const ResponseHandle& handle)
-{
-	Header header(	Header::NEGATIVE_RESPONSE,
-					false,
-					handle.source,
-					handle.destination,
-					handle.packetIdentifier);
-	
-	SmartPointer payload;
-	this->communication->addResponse(header, payload);
-}
