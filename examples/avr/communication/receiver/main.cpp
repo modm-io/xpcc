@@ -19,8 +19,8 @@
 // ----------------------------------------------------------------------------
 // Logging
 
-xpcc::BufferedUart0 loggerUart(115200);
-xpcc::IODeviceWrapper<xpcc::BufferedUart0> loggerDevice(loggerUart);
+xpcc::atmega::BufferedUart0 loggerUart(115200);
+xpcc::IODeviceWrapper<xpcc::atmega::BufferedUart0> loggerDevice(loggerUart);
 
 xpcc::log::Logger xpcc::log::debug(loggerDevice);
 xpcc::log::Logger xpcc::log::info(loggerDevice);
@@ -49,7 +49,7 @@ Postman postman;
 xpcc::Dispatcher dispatcher(&connector, &postman);
 
 // Default filters to receive any extended CAN frame
-FLASH(uint8_t canFilter[]) =
+FLASH_STORAGE(uint8_t canFilter[]) =
 {
 	MCP2515_FILTER_EXTENDED(0),	// Filter 0
 	MCP2515_FILTER_EXTENDED(0),	// Filter 1
@@ -75,7 +75,7 @@ MAIN_FUNCTION
 	// needed by the MCP2515
 	Spi::initialize();
 	Cs::setOutput();
-	Int::configure(xpcc::gpio::PULLUP);
+	Int::setInput(xpcc::atmega::PULLUP);
 	
 	// Configure MCP2515 and set the filters
 	device.initialize(xpcc::can::BITRATE_125_KBPS);
