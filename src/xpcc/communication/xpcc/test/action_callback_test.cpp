@@ -28,38 +28,67 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef FAKE_CAN_DRIVER_HPP
-#define FAKE_CAN_DRIVER_HPP
+#include <xpcc/communication/xpcc/action_callback.hpp>
 
-#include <xpcc/driver/connectivity/can/message.hpp>
-#include <xpcc/container/linked_list.hpp>
+#include "action_callback_test.hpp"
 
-class FakeCanDriver
+class TestComponent : public xpcc::AbstractComponent
 {
 public:
-	FakeCanDriver();
+	TestComponent() :
+		xpcc::AbstractComponent(12, 0),
+		methodWithParameterCalled(false),
+		methodWithoutParameterCalled(false),
+		parameter(0)
+	{
+	}
 	
-	bool
-	isMessageAvailable();
+	void
+	methodWithoutParameter(const xpcc::ResponseHandle&)
+	{
+		methodWithoutParameterCalled = true;
+	}
 	
-	bool
-	getMessage(xpcc::can::Message& message);
+	void
+	methodWithParameter(const xpcc::ResponseHandle&, const uint32_t *parameter)
+	{
+		methodWithParameterCalled = true;
+		this->parameter = *parameter;
+	}
 	
-	bool
-	isReadyToSend();
-	
-	bool
-	sendMessage(const xpcc::can::Message& message);
-	
-public:
-	/// Messages which should be received
-	xpcc::LinkedList<xpcc::can::Message> receiveList;
-	
-	/// List of all messages send
-	xpcc::LinkedList<xpcc::can::Message> sendList;
-	
-	/// number of messages which could be send
-	uint8_t sendSlots;
+	bool methodWithParameterCalled;
+	bool methodWithoutParameterCalled;
+	uint32_t parameter;
 };
 
-#endif	// FAKE_CAN_DRIVER_HPP
+// ----------------------------------------------------------------------------
+void
+ActionCallbackTest::testNoParameter()
+{
+	TestComponent component;
+	xpcc::ActionCallback callback(&component, &TestComponent::methodWithoutParameter);
+	
+	xpcc::Header header;
+	xpcc::SmartPointer payload;
+	
+	callback.call(xpcc::ResponseHandle(header), payload);
+	
+	TEST_ASSERT_TRUE(component.methodWithoutParameterCalled);
+}
+
+// ----------------------------------------------------------------------------
+void
+ActionCallbackTest::testParameter()
+{
+	TestComponent component;
+	xpcc::ActionCallback callback(&component, &TestComponent::methodWithParameter);
+	
+	xpcc::Header header;
+	uint32_t parameter = 0x12345678;
+	xpcc::SmartPointer payload(&parameter);
+	
+	callback.call(xpcc::ResponseHandle(header), payload);
+	
+	TEST_ASSERT_TRUE(component.methodWithParameterCalled);
+	TEST_ASSERT_EQUALS(component.parameter, parameter);
+}

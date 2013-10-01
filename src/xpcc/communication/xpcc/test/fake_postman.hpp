@@ -28,19 +28,36 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef TESTING_CAN_CONNECTOR_HPP
-#define TESTING_CAN_CONNECTOR_HPP
+#ifndef FAKE_POSTMAN_HPP
+#define FAKE_POSTMAN_HPP
 
-#include <xpcc/communication/backend/can/can_connector.hpp>
-#include "fake_can_driver.hpp"
+#include <xpcc/communication/xpcc/postman/postman.hpp>
+#include <xpcc/container/linked_list.hpp>
 
-class TestingCanConnector : public xpcc::CanConnector<FakeCanDriver>
+#include "testing_component_1.hpp"
+#include "testing_component_2.hpp"
+#include "message.hpp"
+
+/**
+ * 
+ * 
+ * \see	DispatcherTest
+ */
+class FakePostman : public xpcc::Postman
 {
 public:
-	TestingCanConnector(FakeCanDriver *driver);
+	virtual DeliverInfo
+	deliverPacket(const xpcc::Header& header,
+			const xpcc::SmartPointer& payload);
 	
-	// expose the internal variable for testing
-	using xpcc::CanConnector<FakeCanDriver>::messageCounter;
+	virtual bool
+	isComponentAvaliable(uint8_t component) const;
+	
+public:
+	xpcc::LinkedList<Message> messagesToDeliver;
+	
+	TestingComponent1 *component1;	///< must be created external!
+	TestingComponent2 *component2;	///< must be created external!
 };
 
-#endif	// TESTING_CAN_CONNECTOR_HPP
+#endif	// FAKE_POSTMAN_HPP

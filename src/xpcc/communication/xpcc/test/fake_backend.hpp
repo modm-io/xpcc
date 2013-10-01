@@ -28,67 +28,44 @@
  */
 // ----------------------------------------------------------------------------
 
-#include <xpcc/communication/action_callback.hpp>
+#ifndef FAKE_BACKEND_HPP
+#define FAKE_BACKEND_HPP
 
-#include "action_callback_test.hpp"
+#include <xpcc/communication/xpcc/backend/backend_interface.hpp>
+#include <xpcc/container/linked_list.hpp>
 
-class TestComponent : public xpcc::AbstractComponent
+#include "message.hpp"
+
+class FakeBackend : public xpcc::BackendInterface
 {
 public:
-	TestComponent() :
-		xpcc::AbstractComponent(12, 0),
-		methodWithParameterCalled(false),
-		methodWithoutParameterCalled(false),
-		parameter(0)
-	{
-	}
+	virtual void
+	update();
 	
-	void
-	methodWithoutParameter(const xpcc::ResponseHandle&)
-	{
-		methodWithoutParameterCalled = true;
-	}
+	virtual void
+	sendPacket(const xpcc::Header &header,
+			xpcc::SmartPointer payload = xpcc::SmartPointer());
 	
-	void
-	methodWithParameter(const xpcc::ResponseHandle&, const uint32_t *parameter)
-	{
-		methodWithParameterCalled = true;
-		this->parameter = *parameter;
-	}
 	
-	bool methodWithParameterCalled;
-	bool methodWithoutParameterCalled;
-	uint32_t parameter;
+	virtual bool
+	isPacketAvailable() const;
+	
+	virtual const xpcc::Header&
+	getPacketHeader() const;
+	
+	virtual const xpcc::SmartPointer
+	getPacketPayload() const;
+	
+	virtual void
+	dropPacket();
+
+public:
+	/// Messages send by the dispatcher via sendPacket
+	xpcc::LinkedList<Message> messagesSend;
+	
+	/// Messages which should be received. isPacketAvailable(), getPacketHeader(),
+	/// getPacketPayload() and dropPacket() operate on this list.
+	xpcc::LinkedList<Message> messagesToReceive;
 };
 
-// ----------------------------------------------------------------------------
-void
-ActionCallbackTest::testNoParameter()
-{
-	TestComponent component;
-	xpcc::ActionCallback callback(&component, &TestComponent::methodWithoutParameter);
-	
-	xpcc::Header header;
-	xpcc::SmartPointer payload;
-	
-	callback.call(xpcc::ResponseHandle(header), payload);
-	
-	TEST_ASSERT_TRUE(component.methodWithoutParameterCalled);
-}
-
-// ----------------------------------------------------------------------------
-void
-ActionCallbackTest::testParameter()
-{
-	TestComponent component;
-	xpcc::ActionCallback callback(&component, &TestComponent::methodWithParameter);
-	
-	xpcc::Header header;
-	uint32_t parameter = 0x12345678;
-	xpcc::SmartPointer payload(&parameter);
-	
-	callback.call(xpcc::ResponseHandle(header), payload);
-	
-	TEST_ASSERT_TRUE(component.methodWithParameterCalled);
-	TEST_ASSERT_EQUALS(component.parameter, parameter);
-}
+#endif

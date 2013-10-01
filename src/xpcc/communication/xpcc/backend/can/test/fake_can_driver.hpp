@@ -28,44 +28,38 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef FAKE_BACKEND_HPP
-#define FAKE_BACKEND_HPP
+#ifndef FAKE_CAN_DRIVER_HPP
+#define FAKE_CAN_DRIVER_HPP
 
-#include <xpcc/communication/backend/backend_interface.hpp>
+#include <xpcc/communication/can/message.hpp>
 #include <xpcc/container/linked_list.hpp>
 
-#include "message.hpp"
-
-class FakeBackend : public xpcc::BackendInterface
+class FakeCanDriver
 {
 public:
-	virtual void
-	update();
+	FakeCanDriver();
 	
-	virtual void
-	sendPacket(const xpcc::Header &header,
-			xpcc::SmartPointer payload = xpcc::SmartPointer());
+	bool
+	isMessageAvailable();
 	
+	bool
+	getMessage(xpcc::can::Message& message);
 	
-	virtual bool
-	isPacketAvailable() const;
+	bool
+	isReadyToSend();
 	
-	virtual const xpcc::Header&
-	getPacketHeader() const;
+	bool
+	sendMessage(const xpcc::can::Message& message);
 	
-	virtual const xpcc::SmartPointer
-	getPacketPayload() const;
-	
-	virtual void
-	dropPacket();
-
 public:
-	/// Messages send by the dispatcher via sendPacket
-	xpcc::LinkedList<Message> messagesSend;
+	/// Messages which should be received
+	xpcc::LinkedList<xpcc::can::Message> receiveList;
 	
-	/// Messages which should be received. isPacketAvailable(), getPacketHeader(),
-	/// getPacketPayload() and dropPacket() operate on this list.
-	xpcc::LinkedList<Message> messagesToReceive;
+	/// List of all messages send
+	xpcc::LinkedList<xpcc::can::Message> sendList;
+	
+	/// number of messages which could be send
+	uint8_t sendSlots;
 };
 
-#endif
+#endif	// FAKE_CAN_DRIVER_HPP
