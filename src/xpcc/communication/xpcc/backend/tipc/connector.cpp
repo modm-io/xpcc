@@ -27,7 +27,7 @@
  */
 // ----------------------------------------------------------------------------
 
-#include "tipc.hpp"
+#include "connector.hpp"
 #include <xpcc/debug/logger.hpp>
 
 #undef  XPCC_LOG_LEVEL
@@ -95,7 +95,7 @@ xpcc::TipcConnector::sendPacket(const xpcc::Header &header, SmartPointer payload
 //			<< " payload size=" << payload.getSize()
 //			<< " payload=" << payload
 //			<< xpcc::flush;
-	
+
 	SmartPointer combinedPayload( sizeof(xpcc::Header) + payload.getSize() );
 
 	memcpy(	combinedPayload.getPointer(), &header, sizeof(xpcc::Header) );
