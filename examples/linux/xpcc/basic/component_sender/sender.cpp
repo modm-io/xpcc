@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2009-2011, Fabian Greif
  * Copyright (c) 2012, 2016, Sascha Schade
- * Copyright (c) 2015, 2017-2018, Niklas Hauser
+ * Copyright (c) 2015, 2017, Niklas Hauser
  *
  * This file is part of the modm project.
  *
@@ -17,8 +17,7 @@
 #undef MODM_LOG_LEVEL
 #define	MODM_LOG_LEVEL modm::log::DEBUG
 
-#include "communication/identifier.hpp"
-#include "communication/packets.hpp"
+#include <identifier.hpp>
 
 #include "sender.hpp"
 
