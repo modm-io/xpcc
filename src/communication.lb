@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2018, 2026, Niklas Hauser
+#
+# This file is part of the modm project.
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+# -----------------------------------------------------------------------------
+
+def init(module):
+    module.name = ":communication"
+    module.description = FileReader("communication.md")
+
+def prepare(module, options):
+    module.depends(
+        "modm:architecture:can",
+        "modm:build",
+        "modm:container",
+        "modm:debug",
+        "modm:io", # from generated robot_packets.hpp
+        "modm:math:utils",
+        "modm:processing:resumable",
+        "modm:processing:timer")
+
+    module.add_option(
+        NumericOption(
+            name="timeout.acknowledge",
+            description="Timeout in ms of an reception acknowledgement",
+            minimum=10, maximum=10000,
+            default=100))
+
+    module.add_collector(
+        CallableCollector(name="generator",
+                          description="Substitutions of the XPCC generator for the SConscript"))
+
+    module.add_option(
+        NumericOption(
+            name="timeout.response",
+            description="Timeout in ms of an request response",
+            minimum=10, maximum=10000,
+            default=200))
+
+    return True
+
+def build(env):
+    if env.has_module("modm:communication:xpcc"):
+        raise ValueError("The 'xpcc:communication' module replaces the deprecated "
+                         "'modm:communication:xpcc' module, please remove it from your project!")
+
+    env.collect("modm:build:path.include", "xpcc/src")
+    env.outbasepath = "xpcc/src"
+
+    ignore = ["*.in", "*backend/tipc*", "*/ui"]
+    if env["modm:target"].identifier["platform"] in ["avr"]:
+        ignore.append("*postman/dynamic*")
+
+    env.copy("xpcc", ignore=env.ignore_paths(*ignore))
+    env.copy("xpcc.hpp")
+    env.template("xpcc/dispatcher.hpp.in", "xpcc/dispatcher.hpp")
+
+
+def post_build(env):
+    # Replaces the repository SConscript that modm:build:scons would generate
+    repo_filter = lambda scope: scope.repository == "xpcc"
+    flags = env.query("modm:build:collect_flags")(env, repo_filter)
+    sources = env.query("modm:build:source_files")["xpcc"]
+    generator = next((g() for g in env.collector_values("generator")), None)
+    def flags_format(flag):
+        for fmt in env.collector_values("modm:build:scons:flag_format"):
+            if (nflag := fmt(flag)): return nflag
+        return '"{}"'.format(flag)
+
+    env.substitutions = {
+        "flags": flags[None],
+        "sources": [(f, flags[f]) for f in sources],
+        "include_paths": env.collector_values("modm:build:path.include", filterfunc=repo_filter),
+        "generator": generator,
+    }
+    env.outbasepath = "xpcc"
+    env.template("SConscript.in", "SConscript",
+                 filters={"flags_format": flags_format,
+                          "relocate": lambda p: env.relative_outpath(p, "xpcc")})

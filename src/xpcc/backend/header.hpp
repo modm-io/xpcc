@@ -17,14 +17,14 @@
 
 #include <stdint.h>
 
-#include <modm/communication/xpcc/smart_pointer.hpp>
+#include <xpcc/smart_pointer.hpp>
 
 namespace xpcc
 {
 	/**
 	 * \brief 	Header of a packet
 	 *
-	 * \ingroup	modm_communication_xpcc_backend
+	 * \ingroup	xpcc_backend
 	 * \author	Martin Rosekeit
 	 * \author	Fabian Greif
 	 */

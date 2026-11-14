@@ -14,7 +14,7 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 
-#include <modm/communication/xpcc.hpp>
+#include <xpcc.hpp>
 
 /// @ingroup modm_test_test_communication_xpcc
 struct Message

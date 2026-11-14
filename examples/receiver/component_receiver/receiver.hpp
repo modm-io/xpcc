@@ -16,7 +16,7 @@
 #ifndef COMPONENT_RECEIVER_HPP
 #define COMPONENT_RECEIVER_HPP
 
-#include <modm/communication/xpcc/abstract_component.hpp>
+#include <xpcc/abstract_component.hpp>
 
 #include <packets.hpp>
 

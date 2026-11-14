@@ -12,8 +12,8 @@
 // ----------------------------------------------------------------------------
 
 #include <modm/platform.hpp>
-#include <modm/communication/xpcc.hpp>
-#include <modm/communication/xpcc/backend/can.hpp>
+#include <xpcc.hpp>
+#include <xpcc/backend/can.hpp>
 #include <modm/debug/logger.hpp>
 
 #include <modm/driver/can/mcp2515.hpp>

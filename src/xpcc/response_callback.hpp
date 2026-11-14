@@ -18,7 +18,7 @@
 #ifndef	XPCC_RESPONSE_CALLBACK_HPP
 #define	XPCC_RESPONSE_CALLBACK_HPP
 
-#include <modm/communication/xpcc/smart_pointer.hpp>
+#include <xpcc/smart_pointer.hpp>
 
 #include "backend/backend_interface.hpp"
 #include "communicatable.hpp"
@@ -31,7 +31,7 @@ namespace xpcc
 	 *
 	 * Is a \b Functor.
 	 *
-	 * \ingroup		modm_communication_xpcc
+	 * \ingroup		xpcc
 	 */
 	class ResponseCallback
 	{

@@ -15,7 +15,7 @@
 #ifndef TESTING_CAN_CONNECTOR_HPP
 #define TESTING_CAN_CONNECTOR_HPP
 
-#include <modm/communication/xpcc/backend/can/connector.hpp>
+#include <xpcc/backend/can/connector.hpp>
 
 #include <modm-test/mock/can_driver.hpp>
 

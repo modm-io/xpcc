@@ -29,7 +29,7 @@ namespace xpcc
  * The payload is word aligned and at least one byte large, so that
  * `getPointer()` always returns a valid address.
  *
- * @ingroup	modm_communication_xpcc
+ * @ingroup	xpcc
  */
 class SmartPointer
 {
@@ -95,10 +95,3 @@ private:
 };
 
 }	// namespace xpcc
-
-namespace modm
-{
-
-using SmartPointer [[deprecated("Use xpcc::SmartPointer instead")]] = xpcc::SmartPointer; // DEPRECATED: 2027q4
-
-}	// namespace modm

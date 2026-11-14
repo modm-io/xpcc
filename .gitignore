@@ -1,0 +1,8 @@
+build/
+examples/*/modm/
+examples/*/xpcc/
+examples/*/generated/
+examples/*/SConstruct
+examples/*/.lbuild_cache/
+.sconsign.dblite
+*.log

@@ -12,7 +12,7 @@
  */
 // ----------------------------------------------------------------------------
 
-#include <modm/communication/xpcc/backend/can/connector.hpp>
+#include <xpcc/backend/can/connector.hpp>
 #include "can_connector_base_test.hpp"
 
 // ----------------------------------------------------------------------------

@@ -46,7 +46,7 @@ namespace xpcc
 	 * \see		modm::Task
 	 * \see		xpcc::Communicatable
 	 *
-	 * \ingroup	modm_communication_xpcc
+	 * \ingroup	xpcc
 	 */
 	class AbstractComponent : public Communicatable
 	{

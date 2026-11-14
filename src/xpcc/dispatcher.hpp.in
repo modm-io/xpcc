@@ -34,7 +34,7 @@ namespace xpcc
 	 * \todo	Documentation
 	 *
 	 * \author	Georgi Grinshpun
-	 * \ingroup	modm_communication_xpcc
+	 * \ingroup	xpcc
 	 */
 	class Dispatcher
 	{

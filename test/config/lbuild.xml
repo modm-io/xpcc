@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<library>
+  <repositories>
+    <repository><path>../../ext/modm/repo.lb</path></repository>
+    <repository><path>../../ext/modm/test/repo.lb</path></repository>
+    <repository><path>../../repo.lb</path></repository>
+    <repository><path>../repo.lb</path></repository>
+  </repositories>
+  <options>
+    <option name="modm:build:scons:include_sconstruct">yes</option>
+    <option name="modm:build:info.build">yes</option>
+    <option name="modm:build:info.git">Info+Status</option>
+  </options>
+  <modules>
+    <module>modm:build:scons</module>
+    <module>xpcc-test:test</module>
+  </modules>
+  <collectors>
+    <collect name="modm:build:cppdefines">MODM_CHRONO_MILLI_CLOCK_NOW=modm_platform_milli_now</collect>
+    <collect name="modm:build:cppdefines">MODM_CHRONO_MICRO_CLOCK_NOW=modm_platform_micro_now</collect>
+  </collectors>
+</library>

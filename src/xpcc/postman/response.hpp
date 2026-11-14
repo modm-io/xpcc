@@ -22,7 +22,7 @@ namespace xpcc
 /**
  * Response to an action call.
  *
- * @ingroup	modm_communication_xpcc
+ * @ingroup	xpcc
  */
 enum class
 Response : bool
@@ -34,7 +34,7 @@ Response : bool
 /**
  * Action Response with optional return data.
  *
- * @ingroup	modm_communication_xpcc
+ * @ingroup	xpcc
  */
 template< typename T = void>
 class ActionResult

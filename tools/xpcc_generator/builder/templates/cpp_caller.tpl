@@ -20,7 +20,7 @@
 #include "identifier.hpp"
 #include "packets.hpp"
 
-#include <modm/communication/xpcc/communicatable_task.hpp>
+#include <xpcc/communicatable_task.hpp>
 #include <modm/processing/protothread.hpp>
 #include <modm/processing/resumable.hpp>
 

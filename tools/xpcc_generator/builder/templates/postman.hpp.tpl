@@ -17,8 +17,8 @@
 #ifndef	POSTMAN_HPP
 #define	POSTMAN_HPP
 
-#include <modm/communication/xpcc.hpp>
-#include <modm/communication/xpcc/postman/postman.hpp>
+#include <xpcc.hpp>
+#include <xpcc/postman/postman.hpp>
 #include "packets.hpp"
 
 class Postman : public xpcc::Postman

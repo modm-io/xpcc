@@ -23,7 +23,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <modm/io/iostream.hpp>
-#include <modm/communication/xpcc/smart_pointer.hpp>
+#include <xpcc/smart_pointer.hpp>
 
 namespace {{ namespace }}
 {

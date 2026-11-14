@@ -19,7 +19,7 @@
 
 #include "identifier.hpp"
 #include "packets.hpp"
-#include <modm/communication/xpcc/communicator.hpp>
+#include <xpcc/communicator.hpp>
 
 namespace {{ namespace }}
 {

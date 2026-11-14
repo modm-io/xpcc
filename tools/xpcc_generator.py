@@ -16,7 +16,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # -----------------------------------------------------------------------------
-
 import os
 import re
 import sys
@@ -134,6 +133,18 @@ def xpcc_communication_header(env, xmlfile, container, path=None, dtdPath=None, 
 
 # -----------------------------------------------------------------------------
 def generate(env, **kw):
+	# The generator is copied next to this tool by the xpcc:generator module.
+	# Overwrites the path to the deprecated generator inside modm.
+	env["XPCC_SYSTEM_DESIGN"] = os.path.abspath(os.path.join(
+			os.path.dirname(__file__), "..", "..", "tools", "xpcc_generator"))
+	# Same build messages as the modm comstr tool, unless verbose=1
+	template = env.get("JINJA_TEMPLATE_COMSTR")
+	if template and "Jinja2" in template:
+		template = template.replace("────Jinja2────", "─────XPCC─────")
+		for key, label in [("PACKETS", "───Packets───>"), ("IDENTIFIER", "-Identifier──>"),
+						   ("POSTMAN", "───Postman───>"), ("COMM_STUBS", "─Comm─Stubs──>"),
+						   ("TASK_CALLER", "─Task─Caller─>")]:
+			env.SetDefault(**{f"XPCC_{key}_COMSTR": template.replace("───Template──>", label)})
 	env.SetDefault(XPCC_SYSTEM_DESIGN_SCANNERS = {})
 	env.SetDefault(PYTHON3 = sys.executable)
 	env['XPCC_SYSTEM_DESIGN_SCANNERS']['XML'] = SCons.Script.Scanner(

@@ -16,23 +16,23 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef MODM_COMMUNICATING_VIEW_STACK_HPP
-#define MODM_COMMUNICATING_VIEW_STACK_HPP
+#ifndef XPCC_COMMUNICATING_VIEW_STACK_HPP
+#define XPCC_COMMUNICATING_VIEW_STACK_HPP
 
-#include <modm/communication/xpcc/communicator.hpp>
-#include <modm/communication/xpcc/communicatable.hpp>
+#include <xpcc/communicator.hpp>
+#include <xpcc/communicatable.hpp>
 
-#include "view_stack.hpp"
+#include <modm/ui/menu/view_stack.hpp>
 
-namespace modm
+namespace xpcc
 {
-	/// @ingroup modm_ui_menu
-	template<typename Allocator = std::allocator<IAbstractView> >
-	class CommunicatingViewStack : public ViewStack<Allocator>
+	/// @ingroup xpcc
+	template<typename Allocator = std::allocator<modm::IAbstractView> >
+	class CommunicatingViewStack : public modm::ViewStack<Allocator>
 	{
 	public:
 		constexpr CommunicatingViewStack(modm::GraphicDisplay* display, xpcc::Communicator* communicator) :
-			ViewStack<Allocator>(display),
+			modm::ViewStack<Allocator>(display),
 			communicator(communicator)
 		{
 		}
@@ -48,4 +48,4 @@ namespace modm
 	};
 }
 
-#endif // MODM_COMMUNICATING_VIEW_STACK_HPP
+#endif // XPCC_COMMUNICATING_VIEW_STACK_HPP

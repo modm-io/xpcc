@@ -23,7 +23,7 @@ namespace xpcc
 	/**
 	 * \brief	Response to an action call
 	 *
-	 * \ingroup	modm_communication_xpcc
+	 * \ingroup	xpcc
 	 */
 	class ResponseHandle
 	{

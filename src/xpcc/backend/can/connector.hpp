@@ -118,7 +118,7 @@ namespace xpcc
 	 *
 	 * \todo timeout
 	 *
-	 * \ingroup	modm_communication_xpcc_backend
+	 * \ingroup	xpcc_backend
 	 */
 	template <typename Driver>
 	class CanConnector : protected CanConnectorBase, public BackendInterface

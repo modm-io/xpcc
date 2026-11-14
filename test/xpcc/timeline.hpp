@@ -14,9 +14,9 @@
 #ifndef TIMELINE_HPP
 #define TIMELINE_HPP
 
-#include <modm/communication/xpcc.hpp>
+#include <xpcc.hpp>
 #include <list>
-#include <modm/communication/xpcc/smart_pointer.hpp>
+#include <xpcc/smart_pointer.hpp>
 
 /// @ingroup modm_test_test_communication_xpcc
 class Timeline

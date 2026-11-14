@@ -36,7 +36,7 @@ namespace xpcc
  *
  * On hosted however, this class allows for much easier registering of callbacks.
  *
- * @ingroup	modm_communication_xpcc
+ * @ingroup	xpcc
  * @author	Niklas Hauser
  */
 class DynamicPostman : public Postman

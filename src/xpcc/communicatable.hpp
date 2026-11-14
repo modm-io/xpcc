@@ -23,7 +23,7 @@ namespace xpcc
 	 *
 	 * Needed to have a common base class for the callback classes.
 	 *
-	 * \ingroup	modm_communication_xpcc
+	 * \ingroup	xpcc
 	 */
 	class Communicatable
 	{

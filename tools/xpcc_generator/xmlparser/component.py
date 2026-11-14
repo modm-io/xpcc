@@ -313,7 +313,7 @@ class Component(object):
 		return self.id == other.id and self.name == other.name
 
 	def dump(self):
-		"""
+		r"""
 		Print a nice UML-like box of content of the component
 
 		Example:

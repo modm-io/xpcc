@@ -21,8 +21,8 @@
 #include "header.hpp"
 
 /**
- * \ingroup		modm_communication_xpcc
- * \defgroup 	modm_communication_xpcc_backend Backend
+ * \ingroup		xpcc
+ * \defgroup 	xpcc_backend Backend
  * \brief 		The backend provides connection to different hardware modules
  * 				to transmit the communication.
  *
@@ -37,7 +37,7 @@ namespace xpcc
 	 *
 	 * All backends have to implement this interface.
 	 *
-	 * \ingroup		modm_communication_xpcc_backend
+	 * \ingroup		xpcc_backend
 	 * \author		Martin Rosekeit, Fabian Greif
 	 */
 	class BackendInterface

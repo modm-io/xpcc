@@ -1,0 +1,50 @@
+name: CI
+
+on: [pull_request, push]
+
+jobs:
+  hosted:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/modm-ext/modm-build-cortex-m:2026-09-28
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+      - name: Fix Git permission/ownership problem
+        run: |
+          git config --global --add safe.directory '*'
+      - name: Update lbuild
+        run: |
+          pip3 install --upgrade --upgrade-strategy=eager --break-system-packages modm
+      - name: Hosted Unit Tests
+        run: |
+          (cd test && make run-hosted-linux)
+      - name: XPCC Generator
+        run: |
+          python3 tools/xpcc_generator/builder/system_layout.py examples/xml/communication.xml -o /tmp
+
+  avr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ghcr.io/modm-ext/modm-build-avr:2026-09-28
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+      - name: Fix Git permission/ownership problem
+        run: |
+          git config --global --add safe.directory '*'
+      - name: Update lbuild
+        run: |
+          pip3 install --upgrade --upgrade-strategy=eager --break-system-packages modm
+      - name: AVR Unit Tests
+        run: |
+          (cd test && make compile-mega-2560-pro)
+      - name: Examples
+        run: |
+          (cd examples && ../ext/modm/tools/scripts/examples_compile.py .)
