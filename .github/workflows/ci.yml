@@ -47,4 +47,6 @@ jobs:
           (cd test && make compile-mega-2560-pro)
       - name: Examples
         run: |
-          (cd examples && ../ext/modm/tools/scripts/examples_compile.py .)
+          for example in examples/*/project.xml; do
+            (cd $(dirname $example) && lbuild build && scons build -j$(nproc))
+          done

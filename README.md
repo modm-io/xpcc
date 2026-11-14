@@ -81,8 +81,8 @@ If you set the generator path before, delete the old generated folder.
 
 ```sh
 git submodule update --init
-cd examples/sender && lbuild build && scons
-cd test && make run-hosted-linux   # or run-hosted-darwin-arm64, compile-mega-2560-pro
+(cd examples/sender && lbuild build && scons)
+(cd test && make run-hosted-linux)   # or run-hosted-darwin-arm64, compile-mega-2560-pro
 ```
 
 The tests use modm's unit test runner and mocks from `ext/modm/test`.
